@@ -157,5 +157,6 @@ CSP_IMG_SRC = (
 
 from djangae.contrib.gauth.settings import *
 
+AUTH_USER_MODEL = 'djangae.GaeDatastoreUser'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
