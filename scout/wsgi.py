@@ -15,7 +15,7 @@ from django.core.wsgi import get_wsgi_application
 from djangae.wsgi import DjangaeApplication
 from djangae.utils import on_production
 
-settings = "scout.settings_live" if on_production() else "scout.settings"
+settings = "scout.settings.production" if on_production() else "scout.settings.local"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings)
 
 

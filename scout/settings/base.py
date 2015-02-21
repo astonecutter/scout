@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
-from .boot import get_app_config
+from scout.boot import get_app_config
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_app_config().secret_key
 
@@ -40,6 +40,8 @@ INSTALLED_APPS = (
     'csp',
     'djangae.contrib.gauth',
     'djangae', # Djangae should be after Django core/contrib things
+
+    'scout'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,9 +108,46 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+CSP_DEFAULT_SRC = (
+    "'self'",
+    "https://ssl.gstatic.com",
+    "https://maps.gstatic.com",
+    "https://apis.google.com",
+)
 
-if DEBUG:
-    CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
+CSP_SCRIPT_SRC = (
+    "'self'",
+    "'unsafe-inline'",
+    "'unsafe-eval'",
+    "https://apis.google.com",
+    "https://*.googleapis.com",
+    "https://*.gstatic.com"
+)
 
+CSP_STYLE_SRC = (
+    "'self'",
+    "'unsafe-inline'",
+    "https://fonts.googleapis.com",
+)
+
+CSP_FONT_SRC = (
+    "'self'",
+    "https://fonts.gstatic.com",
+)
+
+CSP_IMG_SRC = (
+    "'self'",
+    # FIFE domains
+    # "https://lh3.googleusercontent.com",
+    # "https://lh4.googleusercontent.com",
+    # "https://lh5.googleusercontent.com",
+    # "https://lh6.googleusercontent.com",
+    # "https://lh3.ggpht.com",
+    # "https://lh4.ggpht.com",
+    # "https://lh5.ggpht.com",
+    # "https://lh6.ggpht.com",
+    "https://*.googleapis.com",
+    "https://*.gstatic.com",
+)
 
 from djangae.contrib.gauth.settings import *
