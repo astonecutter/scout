@@ -17,4 +17,5 @@ urlpatterns = patterns('',
 
     # Note that by default this is also locked down with login:admin in app.yaml
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('djangae.contrib.gauth.urls')),
 )
