@@ -6,9 +6,11 @@ session_csrf.monkeypatch()
 from django.contrib import admin
 admin.autodiscover()
 
+from scout import views
+
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^blog/', include('blog.urls')),
+    url(r'^$', views.home_view),
     url(r'^_ah/', include('djangae.urls')),
 
     # Note that by default this is also locked down with login:admin in app.yaml
