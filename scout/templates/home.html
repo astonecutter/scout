@@ -1,21 +1,63 @@
-<html>
-<head>
-    <style type="text/css">
-      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+        html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
     </style>
-</head>
-<body>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <div id="map-canvas"></div>
+    <div class="row">
+        <div class="col-sm-8">
+            <div id="map-canvas"></div>
+        </div>
+        <div class="col-sm-4">
+            <a href="{% url 'add' %}" class="btn btn-primary">Add</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for property in properties %}
+                        <tr>
+                            <td><a href="{% url 'edit' property.pk %}">{{ property.name }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
     <script type="text/javascript">
+        var properties = {{ properties_json|safe }};
+
         function initialize() {
             var mapOptions = {
                 center: {lat: -34.397, lng: 150.644},
                 zoom: 8
             };
-            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        };
+            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions),
+                geocoder = new google.maps.Geocoder(),
+                bounds = new google.maps.LatLngBounds ();
+
+            // add all the pins
+            properties.forEach(function (p) {
+                if (p.address) {
+                    geocoder.geocode({'address': p.address}, function(results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            var location = results[0].geometry.location;
+                            var marker = new google.maps.Marker({
+                                map: map,
+                                position: location
+                            });
+                            bounds.extend(location);
+                            map.fitBounds(bounds);
+                        } else {
+                            console.log("Geocode was not successful for the following reason: " + status);
+                        }
+                    });
+                }
+            })
+        }
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
-</body>
-</html>
+{% endblock %}

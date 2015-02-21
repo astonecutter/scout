@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'csp',
     'djangae.contrib.gauth',
     'djangae', # Djangae should be after Django core/contrib things
+    'crispy_forms',
 
     'scout'
 )
@@ -62,6 +63,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.static",
+    "django.core.context_processors.request",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     "session_csrf.context_processor"
@@ -81,7 +83,7 @@ SECURE_CHECKS = [
     "djangosecure.check.djangosecure.check_sts",
     "djangosecure.check.djangosecure.check_frame_deny",
     "djangosecure.check.djangosecure.check_ssl_redirect",
-    "scout.settings.check_session_csrf_enabled"
+    "scout.settings.base.check_session_csrf_enabled"
 ]
 
 ROOT_URLCONF = 'scout.urls'
@@ -121,18 +123,21 @@ CSP_SCRIPT_SRC = (
     "'unsafe-eval'",
     "https://apis.google.com",
     "https://*.googleapis.com",
-    "https://*.gstatic.com"
+    "https://*.gstatic.com",
+    "https://maxcdn.bootstrapcdn.com"
 )
 
 CSP_STYLE_SRC = (
     "'self'",
     "'unsafe-inline'",
     "https://fonts.googleapis.com",
+    "https://maxcdn.bootstrapcdn.com"
 )
 
 CSP_FONT_SRC = (
     "'self'",
     "https://fonts.gstatic.com",
+    "https://maxcdn.bootstrapcdn.com"
 )
 
 CSP_IMG_SRC = (
@@ -151,3 +156,6 @@ CSP_IMG_SRC = (
 )
 
 from djangae.contrib.gauth.settings import *
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
