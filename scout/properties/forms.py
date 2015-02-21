@@ -2,7 +2,8 @@ from crispy_forms.bootstrap import FormActions
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
 from django import forms
-from scout.models import Property
+
+from scout.properties.models import Property
 
 
 class PropertyForm(forms.ModelForm):

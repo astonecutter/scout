@@ -10,3 +10,4 @@ class Property(models.Model):
             'name': self.name,
             'address': self.address
         }
+

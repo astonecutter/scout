@@ -3,8 +3,8 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
-from scout import forms
-from scout.models import Property
+from scout.properties import forms
+from scout.properties.models import Property
 
 
 @login_required
@@ -26,7 +26,7 @@ def home_view(request):
 
 
 @login_required
-def add_view(request):
+def property_add_view(request):
     """
     Render the property add form
 
@@ -47,7 +47,7 @@ def add_view(request):
     })
 
 @login_required
-def edit_view(request, pk):
+def property_edit_view(request, pk):
     """
     Render the property edit form
 
@@ -68,3 +68,5 @@ def edit_view(request, pk):
     return render(request, 'form.html', {
         'form': form
     })
+
+

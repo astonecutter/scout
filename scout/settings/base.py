@@ -27,6 +27,10 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+)
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -42,7 +46,8 @@ INSTALLED_APPS = (
     'djangae', # Djangae should be after Django core/contrib things
     'crispy_forms',
 
-    'scout'
+    'scout.markers',
+    'scout.properties',
 )
 
 MIDDLEWARE_CLASSES = (
