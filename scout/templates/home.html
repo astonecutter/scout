@@ -68,12 +68,14 @@
 
             // add all the pins
             markers.forEach(function (p) {
+                var icon = new google.maps.MarkerImage("https://maps.google.com/mapfiles/ms/icons/" + p.marker_colour + ".png");
                 if (p.address) {
                     geocoder.geocode({'address': p.address}, function(results, status) {
                         if (status == google.maps.GeocoderStatus.OK) {
                             var marker = new google.maps.Marker({
                                 map: map,
-                                position: results[0].geometry.location
+                                position: results[0].geometry.location,
+                                icon: icon
                             });
                             bounds.extend(marker.position);
                             map.fitBounds(bounds);
@@ -85,7 +87,7 @@
                     var marker = new google.maps.Marker({
                         map: map,
                         position: new google.maps.LatLng(p.lat, p.long),
-                        icon: new google.maps.MarkerImage("https://maps.google.com/mapfiles/ms/icons/blue.png")
+                        icon: icon
                     });
                     bounds.extend(marker.position);
                     map.fitBounds(bounds);
