@@ -10,7 +10,9 @@
             <div id="map-canvas"></div>
         </div>
         <div class="col-sm-4">
-            <a href="{% url 'properties:add' %}" class="btn btn-primary">Add</a>
+            <h2>Properties</h2>
+            <a href="{% url 'properties:add' %}" class="btn btn-primary">Add property</a>
+            <hr>
             <table class="table">
                 <thead>
                     <tr>
@@ -25,10 +27,27 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <h2>Markers</h2>
+            <a href="{% url 'markers:add' %}" class="btn btn-primary">Add marker</a>
+            <hr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for marker in markers %}
+                        <tr>
+                            <td><a href="{% url 'markers:edit' marker.pk %}">{{ marker.name }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
     <script type="text/javascript">
-        var properties = {{ properties_json|safe }};
+        var markers = {{ markers_json|safe }};
 
         function initialize() {
             var mapOptions = {
@@ -40,21 +59,28 @@
                 bounds = new google.maps.LatLngBounds ();
 
             // add all the pins
-            properties.forEach(function (p) {
+            markers.forEach(function (p) {
                 if (p.address) {
                     geocoder.geocode({'address': p.address}, function(results, status) {
                         if (status == google.maps.GeocoderStatus.OK) {
-                            var location = results[0].geometry.location;
                             var marker = new google.maps.Marker({
                                 map: map,
-                                position: location
+                                position: results[0].geometry.location
                             });
-                            bounds.extend(location);
+                            bounds.extend(marker.position);
                             map.fitBounds(bounds);
                         } else {
                             console.log("Geocode was not successful for the following reason: " + status);
                         }
                     });
+                } else if (p.lat && p.long) {
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: new google.maps.LatLng(p.lat, p.long),
+                        icon: new google.maps.MarkerImage("https://maps.google.com/mapfiles/ms/icons/blue.png")
+                    });
+                    bounds.extend(marker.position);
+                    map.fitBounds(bounds);
                 }
             })
         }

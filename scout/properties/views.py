@@ -2,6 +2,7 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from scout.markers.models import Marker
 
 from scout.properties import forms
 from scout.properties.models import Property
@@ -17,11 +18,14 @@ def home_view(request):
     """
 
     properties = Property.objects.all()
-    properties_json = json.dumps(tuple(p.to_dict() for p in properties))
+    markers = Marker.objects.all()
+    marker_json = json.dumps(
+        tuple(p.to_dict() for p in properties) + tuple(m.to_dict() for m in markers))
 
     return render(request, 'home.html', {
-        'properties': Property.objects.all(),
-        'properties_json': properties_json
+        'properties': properties,
+        'markers': markers,
+        'markers_json': marker_json
     })
 
 
@@ -45,6 +49,7 @@ def property_add_view(request):
     return render(request, 'form.html', {
         'form': form
     })
+
 
 @login_required
 def property_edit_view(request, pk):

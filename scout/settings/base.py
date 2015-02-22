@@ -158,6 +158,7 @@ CSP_IMG_SRC = (
     # "https://lh6.ggpht.com",
     "https://*.googleapis.com",
     "https://*.gstatic.com",
+    "https://maps.google.com",
 )
 
 from djangae.contrib.gauth.settings import *
