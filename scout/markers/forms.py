@@ -19,6 +19,8 @@ class MarkerForm(forms.ModelForm):
             'name',
             'lat',
             'long',
+            'address',
+            'marker_colour',
             FormActions(
                 Submit('submit', 'Save')
             )
