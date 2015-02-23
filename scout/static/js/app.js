@@ -29,12 +29,14 @@
 				if ($scope.myMarkers.length === 0) {
 					// load each of the existing markers
 					angular.forEach(scout.markers, function (marker) {
+						var icon = new google.maps.MarkerImage("https://maps.google.com/mapfiles/ms/icons/" + marker.marker_colour + ".png");
 						if (marker.address) {
 							geocoder.geocode({'address': marker.address}, function (results, status) {
 								if (status == google.maps.GeocoderStatus.OK) {
 									var marker = new google.maps.Marker({
 										map: $scope.myMap,
-										position: results[0].geometry.location
+										position: results[0].geometry.location,
+										icon: icon
 									});
 									$scope.myMarkers.push(marker);
 									bounds.extend(marker.position);
