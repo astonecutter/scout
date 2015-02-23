@@ -16,6 +16,7 @@ handlers:
 - url: /static/
   static_dir: scout/static
   secure: always
+  expiration: "0m"
 - url: /admin.*
   script: scout.wsgi.application
   secure: always
