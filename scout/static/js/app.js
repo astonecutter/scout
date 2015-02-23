@@ -25,24 +25,37 @@
 				$scope.myInfoWindow.open($scope.myMap, marker);
 			};
 
-			// load each of the existing markers
-			angular.forEach(scout.markers, function (marker) {
-				if (marker.address) {
-					geocoder.geocode({'address': marker.address}, function(results, status) {
-                        if (status == google.maps.GeocoderStatus.OK) {
-							var marker = new google.maps.Marker({
-                                map: $scope.myMap,
-                                position: results[0].geometry.location
-                            });
-                            $scope.myMarkers.push(marker);
-							bounds.extend(marker.position);
+			$scope.onMapIdle = function () {
+				if ($scope.myMarkers.length === 0) {
+					// load each of the existing markers
+					angular.forEach(scout.markers, function (marker) {
+						if (marker.address) {
+							geocoder.geocode({'address': marker.address}, function (results, status) {
+								if (status == google.maps.GeocoderStatus.OK) {
+									var marker = new google.maps.Marker({
+										map: $scope.myMap,
+										position: results[0].geometry.location
+									});
+									$scope.myMarkers.push(marker);
+									bounds.extend(marker.position);
+									$scope.myMap.fitBounds(bounds);
+								} else {
+									console.log("Geocode was not successful for the following reason: " + status);
+								}
+							});
+						} else if (marker.lat && marker.long) {
+							var gmarker = new google.maps.Marker({
+								map: map,
+								position: new google.maps.LatLng(marker.lat, marker.long),
+								icon: icon
+							});
+							$scope.myMarkers.push(marker);
+							bounds.extend(gmarker.position);
 							$scope.myMap.fitBounds(bounds);
-                        } else {
-                            console.log("Geocode was not successful for the following reason: " + status);
-                        }
-                    });
+						}
+					})
 				}
-			});
+			}
 
 		}]);
 
