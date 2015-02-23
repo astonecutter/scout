@@ -1,0 +1,25 @@
+{
+  "name": "scout",
+  "version": "0.0.0",
+  "homepage": "https://github.com/astonecutter/scout",
+  "authors": [
+    "Ben Mason <ben@sharkbyte.co.uk>"
+  ],
+  "description": "Scout is a simple GAE app powered by Django & Djangae to make it easier to scout out a new place to live.",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {},
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.3.13",
+    "angular-ui-map": "0.5.0",
+    "angular-ui-utils": "0.2.2"
+  }
+}

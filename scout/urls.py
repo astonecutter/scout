@@ -1,4 +1,6 @@
 from django.conf.urls import patterns, include, url
+from django.conf.urls.static import static
+from django.conf import settings
 
 import session_csrf
 session_csrf.monkeypatch()
@@ -20,4 +22,4 @@ urlpatterns = patterns('',
     # Note that by default this is also locked down with login:admin in app.yaml
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('djangae.contrib.gauth.urls')),
-)
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
