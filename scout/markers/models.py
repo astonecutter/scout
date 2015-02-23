@@ -20,5 +20,6 @@ class Marker(models.Model):
             'name': self.name,
             'lat': self.lat,
             'long': self.long,
+            'address': self.address,
             'marker_colour': self.marker_colour
         }
