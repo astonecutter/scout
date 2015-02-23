@@ -1,21 +1,6 @@
 <!doctype html>
 <html>
-    <head>
-        <style>
-            body {
-                margin: 0;
-            }
-            html, body, .map-canvas {
-                height: 100%;
-            }
-        </style>
-    </head>
-    <body ng-controller="MapCtrl">
-        <div ui-map="worldMap" ui-options="mapOptions" class="map-canvas"></div>
-		<script src="{{ STATIC_URL }}libs/angular/angular.js"></script>
-		<script src="{{ STATIC_URL }}libs/angular-ui-map/ui-map.js"></script>
-		<script src="{{ STATIC_URL }}libs/angular-ui-utils/ui-utils.js"></script>
-        <script src="{{ STATIC_URL }}js/app.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=onGoogleReady"></script>
+    <body>
+        {% block content %}{% endblock %}
     </body>
 </html>
