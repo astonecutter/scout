@@ -45,7 +45,7 @@
 							});
 						} else if (marker.lat && marker.long) {
 							var gmarker = new google.maps.Marker({
-								map: map,
+								map: $scope.myMap,
 								position: new google.maps.LatLng(marker.lat, marker.long),
 								icon: icon
 							});
