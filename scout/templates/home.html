@@ -9,6 +9,11 @@
         html, body, .map-canvas, .app {
             height: 100%;
         }
+        .add-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
     </style>
 
     <div class="app" ng-controller="MapCtrl">
@@ -19,6 +24,12 @@
         </div>
 
         <div ui-map="myMap" ui-options="mapOptions" class="map-canvas" ui-event="{'map-idle' : 'onMapIdle()'}"></div>
+
+        <div class="add-controls">
+            <a href="{% url 'properties:add' %}" class="btn btn-default">Add Property</a>
+            <a href="{% url 'markers:add' %}" class="btn btn-default">Add Marker</a>
+        </div>
+
     </div>
 
     <script>
