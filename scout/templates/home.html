@@ -1,99 +1,46 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
     <style>
-        html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
-    </style>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-    <div class="row">
-        <div class="col-sm-8">
-            <div id="map-canvas"></div>
-        </div>
-        <div class="col-sm-4">
-            <div role="tabpanel">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#properties" aria-controls="properties" role="tab" data-toggle="tab">Properties</a></li>
-                    <li role="presentation"><a href="#markers" aria-controls="markers" role="tab" data-toggle="tab">Markers</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="properties">
-                        <a href="{% url 'properties:add' %}" class="btn btn-primary">Add property</a>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for property in properties %}
-                                    <tr>
-                                        <td><a href="{% url 'properties:edit' property.pk %}">{{ property.name }}</a></td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="markers">
-                        <a href="{% url 'markers:add' %}" class="btn btn-primary">Add marker</a>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for marker in markers %}
-                                    <tr>
-                                        <td><a href="{% url 'markers:edit' marker.pk %}">{{ marker.name }}</a></td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript">
-        var markers = {{ markers_json|safe }};
-
-        function initialize() {
-            var mapOptions = {
-                center: {lat: -34.397, lng: 150.644},
-                zoom: 8
-            };
-            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions),
-                geocoder = new google.maps.Geocoder(),
-                bounds = new google.maps.LatLngBounds ();
-
-            // add all the pins
-            markers.forEach(function (p) {
-                var icon = new google.maps.MarkerImage("https://maps.google.com/mapfiles/ms/icons/" + p.marker_colour + ".png");
-                if (p.address) {
-                    geocoder.geocode({'address': p.address}, function(results, status) {
-                        if (status == google.maps.GeocoderStatus.OK) {
-                            var marker = new google.maps.Marker({
-                                map: map,
-                                position: results[0].geometry.location,
-                                icon: icon
-                            });
-                            bounds.extend(marker.position);
-                            map.fitBounds(bounds);
-                        } else {
-                            console.log("Geocode was not successful for the following reason: " + status);
-                        }
-                    });
-                } else if (p.lat && p.long) {
-                    var marker = new google.maps.Marker({
-                        map: map,
-                        position: new google.maps.LatLng(p.lat, p.long),
-                        icon: icon
-                    });
-                    bounds.extend(marker.position);
-                    map.fitBounds(bounds);
-                }
-            })
+        body {
+            margin: 0;
         }
-        google.maps.event.addDomListener(window, 'load', initialize);
+        html, body, .map-canvas, .app {
+            height: 100%;
+        }
+        .add-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
+
+    <div class="app" ng-controller="MapCtrl">
+        <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index]" ui-event="{'map-click': 'openMarkerInfo(marker)'}"></div>
+
+        <div ui-map-info-window="myInfoWindow" class="info-window">
+            <a href="[[ currentMarker.url ]]" target="_self">[[ currentMarker.name ]]</a>
+        </div>
+
+        <div ui-map="myMap" ui-options="mapOptions" class="map-canvas" ui-event="{'map-idle' : 'onMapIdle()'}"></div>
+
+        <div class="add-controls">
+            <a href="{% url 'properties:add' %}" class="btn btn-default">Add Property</a>
+            <a href="{% url 'markers:add' %}" class="btn btn-default">Add Marker</a>
+        </div>
+
+    </div>
+
+    <script>
+        var scout = {};
+        scout.markers = {{ markers_json|safe }};
     </script>
+
+    <script src="{{ STATIC_URL }}libs/angular/angular.js"></script>
+    <script src="{{ STATIC_URL }}libs/angular-ui-map/ui-map.js"></script>
+    <script src="{{ STATIC_URL }}libs/angular-ui-utils/ui-utils.js"></script>
+    <script src="{{ STATIC_URL }}js/app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=onGoogleReady"></script>
+
 {% endblock %}

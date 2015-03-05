@@ -7,6 +7,7 @@ class Property(models.Model):
 
     def to_dict(self):
         return {
+            'id': self.id,
             'name': self.name,
             'address': self.address,
             'marker_colour': 'red'

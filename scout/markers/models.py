@@ -17,8 +17,10 @@ class Marker(models.Model):
 
     def to_dict(self):
         return {
+            'id': self.id,
             'name': self.name,
             'lat': self.lat,
             'long': self.long,
+            'address': self.address,
             'marker_colour': self.marker_colour
         }

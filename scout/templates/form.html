@@ -3,6 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    {% crispy form form.helper %}
-11{% csrf_token %}22
+    <div class="container" style="padding: 15px">
+        {% crispy form form.helper %}
+    </div>
 {% endblock %}

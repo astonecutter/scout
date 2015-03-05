@@ -1,5 +1,5 @@
 application: apptscout
-version: 1
+version: 2
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -10,17 +10,17 @@ handlers:
   script: scout.wsgi.application
   login: admin
   secure: always
-
 - url: /static/admin/
   static_dir: sitepackages/django/contrib/admin/static/admin/
   secure: always
-
-# Set Django admin to be login:admin as well as Django's is_staff restriction
+- url: /static/
+  static_dir: scout/static
+  secure: always
+  expiration: "0m"
 - url: /admin.*
   script: scout.wsgi.application
   secure: always
   login: admin
-
 - url: /.*
   script: scout.wsgi.application
   secure: always

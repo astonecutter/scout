@@ -2,3 +2,4 @@
 sitepackages
 .idea
 .storage
+scout/static/libs
