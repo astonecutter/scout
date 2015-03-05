@@ -33,13 +33,14 @@
 						if (marker.address) {
 							geocoder.geocode({'address': marker.address}, function (results, status) {
 								if (status == google.maps.GeocoderStatus.OK) {
-									var marker = new google.maps.Marker({
+									var gmarker = new google.maps.Marker({
 										map: $scope.myMap,
 										position: results[0].geometry.location,
-										icon: icon
+										icon: icon,
+										name: marker.name
 									});
-									$scope.myMarkers.push(marker);
-									bounds.extend(marker.position);
+									$scope.myMarkers.push(gmarker);
+									bounds.extend(gmarker.position);
 									$scope.myMap.fitBounds(bounds);
 								} else {
 									console.log("Geocode was not successful for the following reason: " + status);
@@ -49,9 +50,10 @@
 							var gmarker = new google.maps.Marker({
 								map: $scope.myMap,
 								position: new google.maps.LatLng(marker.lat, marker.long),
-								icon: icon
+								icon: icon,
+								name: marker.name
 							});
-							$scope.myMarkers.push(marker);
+							$scope.myMarkers.push(gmarker);
 							bounds.extend(gmarker.position);
 							$scope.myMap.fitBounds(bounds);
 						}
