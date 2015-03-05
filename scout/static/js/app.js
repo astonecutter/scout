@@ -39,7 +39,8 @@
 										map: $scope.myMap,
 										position: results[0].geometry.location,
 										icon: icon,
-										name: marker.name
+										name: marker.name,
+										url: '/properties/edit/' + marker.id + '/'
 									});
 									$scope.myMarkers.push(gmarker);
 									bounds.extend(gmarker.position);
@@ -53,7 +54,8 @@
 								map: $scope.myMap,
 								position: new google.maps.LatLng(marker.lat, marker.long),
 								icon: icon,
-								name: marker.name
+								name: marker.name,
+								url: '/markers/edit/' + marker.id + '/'
 							});
 							$scope.myMarkers.push(gmarker);
 							bounds.extend(gmarker.position);
