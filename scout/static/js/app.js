@@ -5,6 +5,8 @@
 	scout.app = angular.module('scout', ['ui.map'])
 		.run(function () {
 			console.log('Scout application module running...');
+		}).config(function ($interpolateProvider){
+			$interpolateProvider.startSymbol('[[').endSymbol(']]');
 		}).controller('MapCtrl', ['$scope', function($scope) {
 
 			var geocoder = new google.maps.Geocoder(),
