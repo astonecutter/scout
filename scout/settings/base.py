@@ -52,13 +52,14 @@ INSTALLED_APPS = (
 
     'scout.markers',
     'scout.properties',
+    'scout.sharing',
 )
 
 MIDDLEWARE_CLASSES = (
     'djangae.contrib.security.middleware.AppEngineSecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'djangae.contrib.gauth.middleware.AuthenticationMiddleware',
+    'scout.sharing.middleware.CustomAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',
@@ -166,8 +167,9 @@ CSP_IMG_SRC = (
     "https://maps.google.com",
 )
 
-from djangae.contrib.gauth.settings import *
-
 AUTH_USER_MODEL = 'djangae.GaeDatastoreUser'
+AUTHENTICATION_BACKENDS = (
+    'scout.sharing.backends.CustomAppEngineUserAPI',
+)
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

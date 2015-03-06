@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 
     url(r'^markers/', include('scout.markers.urls', namespace='markers')),
     url(r'^properties/', include('scout.properties.urls', namespace='properties')),
+    url(r'^sharing/', include('scout.sharing.urls', namespace='sharing')),
 
     url(r'^_ah/', include('djangae.urls')),
 
