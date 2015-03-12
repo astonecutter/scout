@@ -18,6 +18,7 @@ class PropertyForm(forms.ModelForm):
         h.layout = Layout(
             'name',
             'address',
+            'viewing',
             'notes',
             FormActions(
                 Submit('submit', 'Save')

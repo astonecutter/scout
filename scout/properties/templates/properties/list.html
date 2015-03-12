@@ -13,7 +13,7 @@
                 <tbody>
                     {% for property in properties %}
                         <tr>
-                            <td>{{ property.name }}</td>
+                            <td><a href="{% url 'properties:edit' property.pk %}">{{ property.name }}</a></td>
                             <td>{{ property.notes|linebreaksbr }}</td>
                         </tr>
                     {% endfor %}
