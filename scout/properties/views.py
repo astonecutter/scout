@@ -40,7 +40,7 @@ def property_list_view(request):
 
     properties = Property.objects.all()
 
-    return render(request, 'list.html', {
+    return render(request, 'properties/list.html', {
         'properties': properties
     })
 
