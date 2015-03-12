@@ -30,6 +30,22 @@ def home_view(request):
 
 
 @login_required
+def property_list_view(request):
+    """
+    Render the property list
+
+    :type request: django.http.HttpRequest
+    :rtype: django.http.HttpResponse
+    """
+
+    properties = Property.objects.all()
+
+    return render(request, 'list.html', {
+        'properties': properties
+    })
+
+
+@login_required
 def property_add_view(request):
     """
     Render the property add form
